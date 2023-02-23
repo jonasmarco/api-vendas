@@ -5,6 +5,7 @@ import { getCustomRepository } from 'typeorm'
 import User from '../typeorm/entities/Users'
 import UsersRepository from '../typeorm/repositories/UsersRepository'
 import uploadConfig from '@config/upload'
+import checkImageName from 'src/helpers/checkImageName'
 
 interface IRequest {
   user_id: string
@@ -22,11 +23,16 @@ class UpdateUserAvatarService {
     }
 
     if (user.avatar) {
-      const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar)
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath)
+      if (checkImageName(user.avatar)) {
+        const userAvatarFilePath = path.join(
+          uploadConfig.directory,
+          user.avatar
+        )
+        const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath)
 
-      if (userAvatarFileExists) {
-        await fs.promises.unlink(userAvatarFilePath)
+        if (userAvatarFileExists) {
+          await fs.promises.unlink(userAvatarFilePath)
+        }
       }
     }
 

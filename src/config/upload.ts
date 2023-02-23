@@ -11,9 +11,9 @@ export default {
     filename(request, file, callback) {
       const fileHash = crypto.randomBytes(10).toString('hex')
 
-      const fileName = `${file.originalname}-${fileHash}`
+      const filename = `${fileHash}-${file.originalname}`
 
-      callback(null, fileName)
+      callback(null, filename)
     }
   })
 }

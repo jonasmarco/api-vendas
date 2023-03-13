@@ -1,14 +1,14 @@
 import { Router } from 'express'
-import productRoute from '@modules/products/routes/products.routes'
-import userRoute from '@modules/users/routes/users.routes'
-import sessionRoute from '@modules/users/routes/sessions.routes'
-import passwordRoute from '@modules/users/routes/password.routes'
+import productRouter from '@modules/products/routes/products.routes'
+import userRouter from '@modules/users/routes/users.routes'
+import sessionRouter from '@modules/users/routes/sessions.routes'
+import passwordRouter from '@modules/users/routes/password.routes'
 
 const routes = Router()
 
-routes.use('/products', productRoute)
-routes.use('/users', userRoute)
-routes.use('/sessions', sessionRoute)
-routes.use('/password', passwordRoute)
+routes.use('/products', productRouter)
+routes.use('/users', userRouter)
+routes.use('/sessions', sessionRouter)
+routes.use('/password', passwordRouter)
 
 export default routes

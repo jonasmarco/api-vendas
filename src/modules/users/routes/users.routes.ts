@@ -6,15 +6,15 @@ import UsersController from '../controllers/UsersController'
 import isAuthenticated from '@shared/http/middlewares/isAuthenticated'
 import UserAvatarController from '../controllers/UserAvatarController'
 
-const usersRoute = Router()
+const usersRouter = Router()
 const usersController = new UsersController()
 const usersAvatarController = new UserAvatarController()
 
 const upload = multer(uploadConfig)
 
-usersRoute.get('/', isAuthenticated, usersController.index)
+usersRouter.get('/', isAuthenticated, usersController.index)
 
-usersRoute.post(
+usersRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
@@ -26,7 +26,7 @@ usersRoute.post(
   usersController.create
 )
 
-usersRoute.delete(
+usersRouter.delete(
   '/:id',
   isAuthenticated,
   celebrate({
@@ -37,11 +37,11 @@ usersRoute.delete(
   usersController.delete
 )
 
-usersRoute.patch(
+usersRouter.patch(
   '/avatar',
   isAuthenticated,
   upload.single('avatar'),
   usersAvatarController.update
 )
 
-export default usersRoute
+export default usersRouter

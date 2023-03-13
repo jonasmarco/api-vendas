@@ -2,10 +2,10 @@ import { Router } from 'express'
 import { celebrate, Joi, Segments } from 'celebrate'
 import ForgotPasswordController from '../controllers/ForgotPasswordController'
 
-const passwordRoute = Router()
+const passwordRouter = Router()
 const forgotPasswordController = new ForgotPasswordController()
 
-passwordRoute.post(
+passwordRouter.post(
   '/forgot',
   celebrate({
     [Segments.BODY]: {
@@ -15,4 +15,4 @@ passwordRoute.post(
   forgotPasswordController.create
 )
 
-export default passwordRoute
+export default passwordRouter

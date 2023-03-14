@@ -11,7 +11,7 @@ export default class UserTokensRepository extends Repository<UserToken> {
     })
   }
 
-  public async generateToken(user_id: string): Promise<UserToken | undefined> {
+  public async generateToken(user_id: string): Promise<UserToken> {
     const userToken = this.create({
       user_id
     })
@@ -19,13 +19,5 @@ export default class UserTokensRepository extends Repository<UserToken> {
     await this.save(userToken)
 
     return userToken
-  }
-
-  public async findByUser_id(user_id: string): Promise<UserToken | undefined> {
-    return await this.findOne({
-      where: {
-        user_id
-      }
-    })
   }
 }

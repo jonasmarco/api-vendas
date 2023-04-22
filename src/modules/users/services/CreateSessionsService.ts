@@ -3,7 +3,7 @@ import { compare } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 import authConfig from '@config/auth'
 import { getCustomRepository } from 'typeorm'
-import User from '../typeorm/entities/Users'
+import User from '../typeorm/entities/User'
 import UsersRepository from '../typeorm/repositories/UsersRepository'
 
 interface IRequest {

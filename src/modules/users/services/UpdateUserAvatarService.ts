@@ -5,7 +5,7 @@ import { getCustomRepository } from 'typeorm'
 import User from '../typeorm/entities/User'
 import UsersRepository from '../typeorm/repositories/UsersRepository'
 import uploadConfig from '@config/upload'
-import checkImageName from 'src/helpers/checkImageName'
+import checkImageName from '@helpers/checkImageName'
 
 interface IRequest {
   user_id: string

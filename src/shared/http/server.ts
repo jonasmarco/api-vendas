@@ -22,6 +22,7 @@ app.use(routes)
 app.use(errors())
 
 app.use(
+  // eslint-disable-next-line
   (error: Error, request: Request, response: Response, next: NextFunction) => {
     if (error instanceof AppError) {
       return response.status(error.statusCode).json({

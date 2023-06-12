@@ -31,7 +31,13 @@ class CreateSessionsService {
       throw new AppError('Incorrect e-mail or password.', 401)
     }
 
-    const token = sign({}, authConfig.jwt.secret, {
+    const secret = authConfig.jwt.secret
+
+    if (!secret) {
+      throw new Error('JWT secret must be defined')
+    }
+
+    const token = sign({}, secret, {
       subject: user.id,
       expiresIn: authConfig.jwt.expiresIn
     })

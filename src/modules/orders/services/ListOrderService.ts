@@ -1,6 +1,9 @@
-import { getCustomRepository } from 'typeorm'
+import { getManager } from 'typeorm'
+import { PaginationAwareObject } from 'typeorm-pagination/dist/helpers/pagination'
 import Order from '../typeorm/entities/Order'
 import OrdersRepository from '../typeorm/repositories/OrdersRepository'
+import RedisCache from '@shared/cache/RedisCache'
+import { ORDER_LIST } from '@config/redis/vars'
 
 interface IPaginateOrder {
   from: number
@@ -15,13 +18,28 @@ interface IPaginateOrder {
 
 class ListOrderService {
   public async execute(): Promise<IPaginateOrder> {
-    const ordersRepository = getCustomRepository(OrdersRepository)
+    const entityManager = getManager()
+    const ordersRepository = entityManager.getCustomRepository(OrdersRepository)
 
-    const orders = await ordersRepository
-      .createQueryBuilder('order')
-      .leftJoinAndSelect('order.customer', 'customer')
-      .leftJoinAndSelect('order.order_products', 'order_products')
-      .paginate()
+    const redisCache = new RedisCache()
+
+    let orders: PaginationAwareObject
+
+    const cachedOrders = await redisCache.recovery<PaginationAwareObject>(
+      ORDER_LIST
+    )
+
+    if (!cachedOrders) {
+      orders = await ordersRepository
+        .createQueryBuilder('order')
+        .leftJoinAndSelect('order.customer', 'customer')
+        .leftJoinAndSelect('order.order_products', 'order_products')
+        .paginate()
+
+      await redisCache.save(ORDER_LIST, orders)
+    } else {
+      orders = cachedOrders
+    }
 
     return orders as IPaginateOrder
   }

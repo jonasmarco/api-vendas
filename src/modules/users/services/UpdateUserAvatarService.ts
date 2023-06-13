@@ -6,6 +6,8 @@ import User from '../typeorm/entities/User'
 import UsersRepository from '../typeorm/repositories/UsersRepository'
 import uploadConfig from '@config/upload'
 import checkImageName from '@helpers/checkImageName'
+import RedisCache from '@shared/cache/RedisCache'
+import { USER_LIST } from '@config/redis/vars'
 
 interface IRequest {
   user_id: string
@@ -35,6 +37,9 @@ class UpdateUserAvatarService {
         }
       }
     }
+
+    const redisCache = new RedisCache()
+    await redisCache.invalidate(USER_LIST)
 
     user.avatar = avatarFilename
 

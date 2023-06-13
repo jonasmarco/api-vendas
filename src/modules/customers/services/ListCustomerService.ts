@@ -1,6 +1,9 @@
-import { getCustomRepository } from 'typeorm'
+import { getManager } from 'typeorm'
+import { PaginationAwareObject } from 'typeorm-pagination/dist/helpers/pagination'
 import Customer from '../typeorm/entities/Customer'
 import CustomersRepository from '../typeorm/repositories/CustomersRepository'
+import RedisCache from '@shared/cache/RedisCache'
+import { CUSTOMER_LIST } from '@config/redis/vars'
 
 interface IPaginateCustomer {
   from: number
@@ -15,9 +18,25 @@ interface IPaginateCustomer {
 
 class ListCustomerService {
   public async execute(): Promise<IPaginateCustomer> {
-    const customersRepository = getCustomRepository(CustomersRepository)
+    const entityManager = getManager()
+    const customersRepository =
+      entityManager.getCustomRepository(CustomersRepository)
 
-    const customers = await customersRepository.createQueryBuilder().paginate()
+    const redisCache = new RedisCache()
+
+    let customers: PaginationAwareObject
+
+    const cachedCustomer = await redisCache.recovery<PaginationAwareObject>(
+      CUSTOMER_LIST
+    )
+
+    if (!cachedCustomer) {
+      customers = await customersRepository.createQueryBuilder().paginate()
+
+      await redisCache.save(CUSTOMER_LIST, customers)
+    } else {
+      customers = cachedCustomer
+    }
 
     return customers as IPaginateCustomer
   }

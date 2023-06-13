@@ -3,6 +3,8 @@ import { compare, hash } from 'bcryptjs'
 import { getCustomRepository } from 'typeorm'
 import User from '../typeorm/entities/User'
 import UsersRepository from '../typeorm/repositories/UsersRepository'
+import RedisCache from '@shared/cache/RedisCache'
+import { USER_LIST } from '@config/redis/vars'
 
 interface IRequest {
   user_id: string
@@ -47,6 +49,9 @@ class UpdateProfileService {
 
       user.password = await hash(password, 8)
     }
+
+    const redisCache = new RedisCache()
+    await redisCache.invalidate(USER_LIST)
 
     user.name = name
     user.email = email

@@ -3,7 +3,7 @@ import { getCustomRepository } from 'typeorm'
 import User from '../typeorm/entities/User'
 import UsersRepository from '../typeorm/repositories/UsersRepository'
 import checkImageType from '@helpers/checkImageType'
-import RedisCache from '@shared/cache/RedisCache'
+import redisCache from '@shared/cache/RedisCache'
 import { USER_LIST } from '@config/redis/vars'
 import DiskStorageProvider from '@shared/providers/StorageProvider/DiskStorageProvider'
 
@@ -29,7 +29,6 @@ class UpdateUserAvatarService {
       }
     }
 
-    const redisCache = new RedisCache()
     await redisCache.invalidate(USER_LIST)
 
     const filename = await storageProvider.saveFile(avatarFilename)

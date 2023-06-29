@@ -4,7 +4,7 @@ import Order from '../typeorm/entities/Order'
 import OrdersRepository from '../typeorm/repositories/OrdersRepository'
 import CustomersRepository from '@modules/customers/typeorm/repositories/CustomersRepository'
 import ProductRepository from '@modules/products/typeorm/repositories/ProductsRepository'
-import RedisCache from '@shared/cache/RedisCache'
+import redisCache from '@shared/cache/RedisCache'
 import { ORDER_LIST } from '@config/redis/vars'
 
 interface IProduct {
@@ -78,7 +78,6 @@ class CreateOrderService {
         product.quantity
     }))
 
-    const redisCache = new RedisCache()
     await redisCache.invalidate(ORDER_LIST)
 
     await productsRepository.save(updatedProductQuantity)

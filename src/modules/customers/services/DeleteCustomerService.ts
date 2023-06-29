@@ -1,7 +1,7 @@
 import AppError from '@shared/errors/AppError'
 import { getCustomRepository } from 'typeorm'
 import CustomersRepository from '../typeorm/repositories/CustomersRepository'
-import RedisCache from '@shared/cache/RedisCache'
+import redisCache from '@shared/cache/RedisCache'
 import { CUSTOMER_LIST } from '@config/redis/vars'
 
 interface IRequest {
@@ -18,7 +18,6 @@ class DeleteCustomerService {
       throw new AppError('Customer not found')
     }
 
-    const redisCache = new RedisCache()
     await redisCache.invalidate(CUSTOMER_LIST)
 
     await customersRepository.remove(customer)

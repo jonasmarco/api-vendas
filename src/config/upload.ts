@@ -3,11 +3,16 @@ import multer, { StorageEngine } from 'multer'
 import crypto from 'crypto'
 
 interface IUploadConfig {
-  driver: 'disk' // | another like s3,
+  driver: 's3' | 'disk'
   tmpFolder: string
   directory: string
   multer: {
     storage: StorageEngine
+  }
+  config: {
+    aws: {
+      bucket: string
+    }
   }
 }
 
@@ -29,5 +34,10 @@ export default {
         callback(null, filename)
       }
     })
+  },
+  config: {
+    aws: {
+      bucket: 'api-vendas'
+    }
   }
 } as IUploadConfig

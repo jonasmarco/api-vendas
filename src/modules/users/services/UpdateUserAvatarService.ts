@@ -2,7 +2,7 @@ import AppError from '@shared/errors/AppError'
 import { getCustomRepository } from 'typeorm'
 import User from '../typeorm/entities/User'
 import UsersRepository from '../typeorm/repositories/UsersRepository'
-import checkImageName from '@helpers/checkImageName'
+import checkImageType from '@helpers/checkImageType'
 import RedisCache from '@shared/cache/RedisCache'
 import { USER_LIST } from '@config/redis/vars'
 import DiskStorageProvider from '@shared/providers/StorageProvider/DiskStorageProvider'
@@ -24,7 +24,7 @@ class UpdateUserAvatarService {
     }
 
     if (user.avatar) {
-      if (checkImageName(user.avatar)) {
+      if (checkImageType(user.avatar)) {
         await storageProvider.deleteFile(user.avatar)
       }
     }

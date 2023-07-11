@@ -1,7 +1,7 @@
 import { getManager } from 'typeorm'
 import { PaginationAwareObject } from 'typeorm-pagination/dist/helpers/pagination'
-import User from '../typeorm/entities/User'
-import UsersRepository from '../typeorm/repositories/UsersRepository'
+import User from '../infra/typeorm/entities/User'
+import UsersRepository from '../infra/typeorm/repositories/UsersRepository'
 import RedisCache from '@shared/cache/RedisCache'
 import { USER_LIST } from '@config/redis/vars'
 

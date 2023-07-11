@@ -1,7 +1,7 @@
 import { getManager } from 'typeorm'
 import { PaginationAwareObject } from 'typeorm-pagination/dist/helpers/pagination'
-import Order from '../typeorm/entities/Order'
-import OrdersRepository from '../typeorm/repositories/OrdersRepository'
+import Order from '../infra/typeorm/entities/Order'
+import OrdersRepository from '../infra/typeorm/repositories/OrdersRepository'
 import RedisCache from '@shared/cache/RedisCache'
 import { ORDER_LIST } from '@config/redis/vars'
 

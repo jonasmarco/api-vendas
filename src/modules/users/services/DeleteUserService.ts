@@ -1,6 +1,6 @@
 import AppError from '@shared/errors/AppError'
 import { getCustomRepository } from 'typeorm'
-import UsersRepository from '../typeorm/repositories/UsersRepository'
+import UsersRepository from '../infra/typeorm/repositories/UsersRepository'
 import redisCache from '@shared/cache/RedisCache'
 import { USER_LIST } from '@config/redis/vars'
 

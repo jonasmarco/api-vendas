@@ -1,7 +1,7 @@
 import { getManager } from 'typeorm'
 import { PaginationAwareObject } from 'typeorm-pagination/dist/helpers/pagination'
-import Product from '../typeorm/entities/Product'
-import ProductRepository from '../typeorm/repositories/ProductsRepository'
+import Product from '../infra/typeorm/entities/Product'
+import ProductRepository from '../infra/typeorm/repositories/ProductsRepository'
 import RedisCache from '@shared/cache/RedisCache'
 import { PRODUCT_LIST } from '@config/redis/vars'
 

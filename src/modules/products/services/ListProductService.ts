@@ -22,7 +22,7 @@ class ListProductService {
     const productsRepository =
       entityManager.getCustomRepository(ProductRepository)
 
-    const redisCache = new RedisCache()
+    const redisCache = RedisCache
 
     let products: PaginationAwareObject
 

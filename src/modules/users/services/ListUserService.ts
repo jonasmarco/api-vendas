@@ -21,7 +21,7 @@ class ListUserService {
     const entityManager = getManager()
     const usersRepository = entityManager.getCustomRepository(UsersRepository)
 
-    const redisCache = new RedisCache()
+    const redisCache = RedisCache
 
     let users: PaginationAwareObject
 

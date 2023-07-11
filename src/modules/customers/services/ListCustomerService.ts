@@ -22,7 +22,7 @@ class ListCustomerService {
     const customersRepository =
       entityManager.getCustomRepository(CustomersRepository)
 
-    const redisCache = new RedisCache()
+    const redisCache = RedisCache
 
     let customers: PaginationAwareObject
 

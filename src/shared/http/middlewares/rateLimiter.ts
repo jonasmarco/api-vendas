@@ -9,7 +9,7 @@ export default async function rateLimiter(
   next: NextFunction
 ): Promise<void> {
   try {
-    const redisCache = new RedisCache()
+    const redisCache = RedisCache
 
     const limiter = new RateLimiterRedis({
       storeClient: redisCache.client,

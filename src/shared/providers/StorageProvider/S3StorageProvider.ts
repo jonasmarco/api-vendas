@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import aws, { S3 } from 'aws-sdk'
+import { S3 } from '@aws-sdk/client-s3'
 import mime from 'mime'
 import uploadConfig from '@config/upload'
 
@@ -8,7 +8,7 @@ export default class S3StorageProvider {
   private client: S3
 
   constructor() {
-    this.client = new aws.S3({
+    this.client = new S3({
       region: 'us-east-1'
     })
   }
@@ -24,15 +24,13 @@ export default class S3StorageProvider {
 
     const fileContent = await fs.promises.readFile(originalPath)
 
-    await this.client
-      .putObject({
-        Bucket: uploadConfig.config.aws.bucket,
-        Key: file,
-        ACL: 'public-read',
-        Body: fileContent,
-        ContentType
-      })
-      .promise()
+    await this.client.putObject({
+      Bucket: uploadConfig.config.aws.bucket,
+      Key: file,
+      ACL: 'public-read',
+      Body: fileContent,
+      ContentType
+    })
 
     await fs.promises.unlink(originalPath)
 
@@ -40,11 +38,9 @@ export default class S3StorageProvider {
   }
 
   public async deleteFile(file: string): Promise<void> {
-    await this.client
-      .deleteObject({
-        Bucket: uploadConfig.config.aws.bucket,
-        Key: file
-      })
-      .promise()
+    await this.client.deleteObject({
+      Bucket: uploadConfig.config.aws.bucket,
+      Key: file
+    })
   }
 }

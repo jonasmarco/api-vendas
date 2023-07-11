@@ -21,7 +21,7 @@ class ListOrderService {
     const entityManager = getManager()
     const ordersRepository = entityManager.getCustomRepository(OrdersRepository)
 
-    const redisCache = new RedisCache()
+    const redisCache = RedisCache
 
     let orders: PaginationAwareObject
 

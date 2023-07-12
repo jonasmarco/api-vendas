@@ -5,22 +5,23 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
+import { ICustomer } from '@modules/customers/domain/models/ICustomer'
 
-@Entity('customers') // nome da tabela
-class Customer {
-  @PrimaryGeneratedColumn('uuid') // chave primária do tipo uuid
+@Entity('customers')
+class Customer implements ICustomer {
+  @PrimaryGeneratedColumn('uuid')
   id: string
 
-  @Column() // coluna padrão
+  @Column()
   name: string
 
   @Column()
   email: string
 
-  @CreateDateColumn() // coluna do tipo data de criação
+  @CreateDateColumn()
   created_at: Date
 
-  @UpdateDateColumn() // coluna do tipo data de atualização
+  @UpdateDateColumn()
   updated_at: Date
 }
 

@@ -8,11 +8,12 @@ import {
   UpdateDateColumn
 } from 'typeorm'
 
+import { IOrdersProducts } from '@modules/orders/domain/models/IOrdersProducts'
 import Order from './Order'
 import Product from '@modules/products/infra/typeorm/entities/Product'
 
 @Entity('orders_products') // nome da tabela
-class OrdersProducts {
+class OrdersProducts implements IOrdersProducts {
   @PrimaryGeneratedColumn('uuid') // chave primária do tipo uuid
   id: string
 
